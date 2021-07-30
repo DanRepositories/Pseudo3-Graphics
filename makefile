@@ -23,3 +23,4 @@ all: $(OBJS_FILES)
 
 clean:
 	$(RM) $(DIR_OBJS)/*.o $(EXE_NAME) core
+
