@@ -1,3 +1,5 @@
+SRC_FOLDER = src
+
 OBJS = main.cpp
 
 CC = g++
@@ -6,7 +8,7 @@ COMP_FLAGS = -w
 
 LINKER_FLAGS = -lSDL2
 
-EXE_NAME = executable
+EXE_NAME = output/executable
 
-all: $(OBJS)
-	$(CC) $(OBJS) $(COMP_FLAGS) $(LINKER_FLAGS) -o $(EXE_NAME)
+all: $(SRC_FOLDER)/$(OBJS)
+	$(CC) $^ $(COMP_FLAGS) $(LINKER_FLAGS) -o $(EXE_NAME)
