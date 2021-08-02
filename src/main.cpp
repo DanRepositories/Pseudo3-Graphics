@@ -18,6 +18,7 @@ int main(int argc, char ** argv)
   }
   else
   {
+    // Creation of window with some parameters
     window = SDL_CreateWindow("Demo", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
 
     if (NULL == window)
@@ -26,10 +27,13 @@ int main(int argc, char ** argv)
     }
     else
     {
+      // Get the surface drawable from the window
       screen_surface = SDL_GetWindowSurface(window);
 
+      // Fill the surface with white
       SDL_FillRect(screen_surface, NULL, SDL_MapRGB(screen_surface->format, 0xFF, 0xFF, 0xFF));
 
+      // Update the surface of window
       SDL_UpdateWindowSurface(window);
 
       SDL_Delay(2000);
@@ -37,6 +41,7 @@ int main(int argc, char ** argv)
       SDL_DestroyWindow(window);
     }
 
+    // Quit all SDL subsystems
     SDL_Quit();
   }
 
