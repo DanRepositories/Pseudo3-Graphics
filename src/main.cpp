@@ -8,6 +8,7 @@ const int SCREEN_HEIGHT = 480;
 
 // Prototypes
 void close(SDL_Window *window, SDL_Renderer *renderer);
+void mainLoop(SDL_Renderer *renderer);
 
 int main(int argc, char ** argv)
 {
@@ -38,26 +39,7 @@ int main(int argc, char ** argv)
       }
       else
       {
-        SDL_Event event;
-        bool quit = false;
-
-        // Main loop
-        while (!quit) 
-        {
-          // Check the events
-          while (SDL_PollEvent(&event) != 0)
-          {
-            if (SDL_QUIT == event.type)
-              quit = true;
-          }
-          
-          // Clear screen
-          SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
-          SDL_RenderClear(renderer);
-
-          // Update Screen
-          SDL_RenderPresent(renderer);
-        }
+        mainLoop(renderer);
       }
     }
 
@@ -65,6 +47,30 @@ int main(int argc, char ** argv)
   }
 
   return EXIT_SUCCESS;
+}
+
+void mainLoop(SDL_Renderer *renderer)
+{
+  SDL_Event event;
+  bool quit = false;
+
+  // Main loop
+  while (!quit) 
+  {
+    // Check the events
+    while (SDL_PollEvent(&event) != 0)
+    {
+      if (SDL_QUIT == event.type)
+        quit = true;
+    }
+    
+    // Clear screen
+    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
+    SDL_RenderClear(renderer);
+
+    // Update Screen
+    SDL_RenderPresent(renderer);
+  }
 }
 
 /**
