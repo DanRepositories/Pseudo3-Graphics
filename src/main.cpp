@@ -6,6 +6,9 @@
 const int SCREEN_WIDTH = 640;
 const int SCREEN_HEIGHT = 480;
 
+// Prototypes
+void close(SDL_Window *window, SDL_Renderer *renderer);
+
 int main(int argc, char ** argv)
 {
   SDL_Window* window = NULL;
@@ -55,20 +58,32 @@ int main(int argc, char ** argv)
           // Update Screen
           SDL_RenderPresent(renderer);
         }
-
-        SDL_DestroyRenderer(renderer);
-        renderer = NULL;
       }
-
-      // Close the window
-      SDL_DestroyWindow(window);
-      window = NULL;
     }
 
-    // Quit all SDL subsystems
-    SDL_Quit();
+    close(window, renderer);
   }
 
   return EXIT_SUCCESS;
+}
+
+/**
+ * Close all resources, check if window and renderer aren't NULL
+ * */
+void close(SDL_Window *window, SDL_Renderer *renderer)
+{
+  if (renderer != NULL)
+  {
+    SDL_DestroyRenderer(renderer);
+    renderer = NULL;
+  }
+
+  if (window != NULL)
+  {
+    SDL_DestroyWindow(window);
+    window = NULL;
+  }
+
+  SDL_Quit();
 }
 
