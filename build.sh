@@ -13,5 +13,6 @@ if [[ ! -d "bin" ]]; then
   mkdir bin
 fi
 
+# Se compila el proyecto usando las instrucciones de makefile
 make
 

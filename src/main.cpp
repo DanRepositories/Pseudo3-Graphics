@@ -27,17 +27,31 @@ int main(int argc, char ** argv)
     }
     else
     {
+      SDL_Event event;
+      bool quit = false;
+
       // Get the surface drawable from the window
       screen_surface = SDL_GetWindowSurface(window);
 
-      // Fill the surface with white
-      SDL_FillRect(screen_surface, NULL, SDL_MapRGB(screen_surface->format, 0xFF, 0xFF, 0xFF));
+      // Main loop
+      while (!quit) 
+      {
+        // Check the events
+        while (SDL_PollEvent(&event) != 0)
+        {
+          if (SDL_QUIT == event.type)
+            quit = true;
+        }
+        
 
-      // Update the surface of window
-      SDL_UpdateWindowSurface(window);
+        // Fill the surface with white
+        SDL_FillRect(screen_surface, NULL, SDL_MapRGB(screen_surface->format, 0xFF, 0xFF, 0xFF));
 
-      SDL_Delay(2000);
+        // Update the surface of window
+        SDL_UpdateWindowSurface(window);
+      }
 
+      // Close the window
       SDL_DestroyWindow(window);
     }
 
