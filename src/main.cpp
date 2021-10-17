@@ -9,7 +9,7 @@ const int SCREEN_HEIGHT = 480;
 int main(int argc, char ** argv)
 {
   SDL_Window* window = NULL;
-  SDL_Surface* screen_surface = NULL;
+  SDL_Renderer *renderer;
 
   if (SDL_Init(SDL_INIT_VIDEO) < 0)
   {
@@ -27,32 +27,42 @@ int main(int argc, char ** argv)
     }
     else
     {
-      SDL_Event event;
-      bool quit = false;
-
-      // Get the surface drawable from the window
-      screen_surface = SDL_GetWindowSurface(window);
-
-      // Main loop
-      while (!quit) 
+      // Get the renderer for window
+      renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+      if (NULL == renderer)
       {
-        // Check the events
-        while (SDL_PollEvent(&event) != 0)
+        printf("Renderer could not be created! - SDL Error: %s\n", SDL_GetError());
+      }
+      else
+      {
+        SDL_Event event;
+        bool quit = false;
+
+        // Main loop
+        while (!quit) 
         {
-          if (SDL_QUIT == event.type)
-            quit = true;
+          // Check the events
+          while (SDL_PollEvent(&event) != 0)
+          {
+            if (SDL_QUIT == event.type)
+              quit = true;
+          }
+          
+          // Clear screen
+          SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
+          SDL_RenderClear(renderer);
+
+          // Update Screen
+          SDL_RenderPresent(renderer);
         }
-        
 
-        // Fill the surface with white
-        SDL_FillRect(screen_surface, NULL, SDL_MapRGB(screen_surface->format, 0xFF, 0xFF, 0xFF));
-
-        // Update the surface of window
-        SDL_UpdateWindowSurface(window);
+        SDL_DestroyRenderer(renderer);
+        renderer = NULL;
       }
 
       // Close the window
       SDL_DestroyWindow(window);
+      window = NULL;
     }
 
     // Quit all SDL subsystems
